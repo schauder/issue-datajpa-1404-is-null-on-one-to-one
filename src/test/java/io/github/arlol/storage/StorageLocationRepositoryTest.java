@@ -19,6 +19,7 @@ public class StorageLocationRepositoryTest {
 
 	@Test
 	public void findByItemIsNullQuery() throws Exception {
+
 		StorageLocation storageLocation = new StorageLocation();
 		storageLocationRepository.save(storageLocation);
 
@@ -29,11 +30,13 @@ public class StorageLocationRepositoryTest {
 
 	@Test
 	public void findByItemIsNull() throws Exception {
+
 		StorageLocation storageLocation = new StorageLocation();
 		storageLocationRepository.save(storageLocation);
 
 		Iterable<StorageLocation> result =
 		        storageLocationRepository.findByItemIsNull();
+
 		assertThat(result).containsOnly(storageLocation);
 	}
 
