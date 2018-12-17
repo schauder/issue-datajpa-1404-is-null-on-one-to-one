@@ -9,6 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
+import java.util.List;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
@@ -16,6 +20,9 @@ public class StorageLocationRepositoryTest {
 
 	@Autowired
 	StorageLocationRepository storageLocationRepository;
+
+	@Autowired
+	EntityManager em;
 
 	@Test
 	public void findByItemIsNullQuery() throws Exception {
@@ -38,6 +45,24 @@ public class StorageLocationRepositoryTest {
 		        storageLocationRepository.findByItemIsNull();
 
 		assertThat(result).containsOnly(storageLocation);
+	}
+
+	/**
+	 * the test currently fails.
+	 *
+	 * But when StorageLocation->Item is made unidirectional it succeeds.
+	 */
+	@Test
+	public void usingEntityManager() {
+
+		StorageLocation storageLocation = new StorageLocation();
+		storageLocationRepository.save(storageLocation);
+
+		List result = em.createQuery("select sl from StorageLocation sl where sl.item is null").getResultList();
+
+		assertThat(result).containsOnly(storageLocation);
+
+
 	}
 
 }
