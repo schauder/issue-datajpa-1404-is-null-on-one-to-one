@@ -13,7 +13,7 @@ public class StorageLocation {
 	@GeneratedValue
 	private Long id;
 
-	@OneToOne(fetch = FetchType.LAZY, mappedBy = "storageLocation")
+	@OneToOne(fetch = FetchType.LAZY)
 	private Item item;
 
 	public Long getId() {
